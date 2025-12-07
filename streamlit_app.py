@@ -9,7 +9,8 @@ st.write(
 )
 name_on_order = st.text_input("Name on Smoothie:")
 st.write(name_on_order)
-session = get_active_session()
+cnx = st.connection("snowfake")
+session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"))
 # st.dataframe(data=my_dataframe, use_container_width=True)
 
@@ -17,8 +18,7 @@ ingredient_list = st.multiselect(
     "chose upto 5 ingredients:",my_dataframe, max_selections=5
 )
 
-cnx = st.connection("snowfake")
-session = cnx.session()
+
 if ingredient_list:
 
     st.write(ingredient_list)
